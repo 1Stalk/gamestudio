@@ -1,7 +1,7 @@
 ---
 name: QA / Tester
-agent: codex
-model: gpt-5.6-luna
+agent: gemini
+model: gemini-3.7-flash
 effort: high
 ---
 
