@@ -79,7 +79,7 @@ leaks=$(ps -eo pid,ppid,etime,pcpu,args 2>/dev/null | tail -n +2 | awk '
 # ни то, ни другое.
 #
 # ПОЧЕМУ ШАБЛОН ИМЕННО ТАКОЙ. Путь worktree в аргументах агента не виден — там
-# только `claude ... --model X --effort Y`, а рабочий каталог `ps` не печатает.
+# только `gemini ... --model X --effort Y`, а рабочий каталог `ps` не печатает.
 # Отличаем воркера от СВОЕЙ сессии координатора по флагу `--model`: воркер всегда
 # запускается с ним (`worker-start --model`), координатор — без. Первый прогон
 # этой строки насчитал «0 из 10», когда вторую строку держал живой воркер.
@@ -87,7 +87,7 @@ leaks=$(ps -eo pid,ppid,etime,pcpu,args 2>/dev/null | tail -n +2 | awk '
 # Умолчание покрывает деревья Orca и агентов; на другом движке допиши свои
 # имена сборщика и раннера, иначе прибор посчитает чужую нагрузку своей.
 [ -f .studio/project.conf ] && . .studio/project.conf
-OURS_RE="${OURS_RE:-orca/workspaces|$(basename "$PWD")|vite-node|vitest|puppeteer|dotnet|godot|claude .*--model|codex}"
+OURS_RE="${OURS_RE:-orca/workspaces|$(basename "$PWD")|vite-node|vitest|puppeteer|dotnet|godot|gemini .*--model|codex}"
 ours=$(ps -eo pcpu,args 2>/dev/null | tail -n +2 | sort -k1 -rn | head -10 |
   grep -cE "$OURS_RE")
 echo
@@ -254,7 +254,7 @@ except Exception:
     #
     # Второй признак я пробовал и выбросил: `latest cursor` терминала считает не
     # строки, а страницы, и считает ПО-РАЗНОМУ у провайдеров — у работающих
-    # claude-воркеров он равен 1, у codex уходит в тысячи. Проверка по нему дала
+    # gemini-воркеров он равен 1, у codex уходит в тысячи. Проверка по нему дала
     # четыре ложных срабатывания из четырёх. Широкий неверный страж хуже узкого
     # верного: он приучает не верить красному.
     #
@@ -273,7 +273,7 @@ except Exception:
     # `1d1ffca`. Различает не баннер, а РЕЗУЛЬТАТ: есть ли у ветки его дерева
     # коммиты впереди ствола. Поэтому ниже два разных вердикта, и лечения им
     # нужны противоположные — одному Enter, другому забрать работу.
-    if printf '%s' "$tail40" | grep -qE 'Claude Code v[0-9]|Codex v[0-9]|Welcome to|MCP startup incomplete|Use /skills'; then
+    if printf '%s' "$tail40" | grep -qE 'Gemini|Codex v[0-9]|Welcome to|MCP startup incomplete|Use /skills'; then
       # Различаем по СЛЕДАМ РАБОТЫ выше баннера, а не по дереву: привязки
       # терминала к worktree в Orca нет (`worktreeId` у всех — корень проекта).
       # У закончившего в хвосте лежат его собственные команды (`Ran ...`), у не

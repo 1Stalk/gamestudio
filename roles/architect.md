@@ -1,11 +1,11 @@
 ---
 name: Architect
-agent: claude
-model: claude-fable-5
+agent: gemini
+model: gemini-3.7-flash
 effort: high
 ---
 
-`claude-fable-5` бывает недоступна по кредитам — тогда `claude-opus-5` с тем же effort.
+`gemini-3.7-flash` используется с `effort: high` для всех архитектурных решений.
 
 **Общее для всех ролей — в `gamestudio/roles/_common.md`.**
 

@@ -1,7 +1,7 @@
 ---
 name: Developer
-agent: claude
-model: claude-opus-5
+agent: gemini
+model: gemini-3.7-flash
 effort: high
 ---
 
